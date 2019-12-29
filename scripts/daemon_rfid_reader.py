@@ -1,7 +1,8 @@
 #!/usr/bin/env python2
 
 import subprocess
-import os 
+import os
+import time
 from Reader import Reader
 
 reader = Reader()
@@ -10,7 +11,6 @@ reader = Reader()
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 print dir_path
-
 while True:
         # reading the card id
         # NOTE: it's been reported that KKMOON Reader might need the following line altered.
@@ -25,5 +25,12 @@ while True:
             # start the player script and pass on the cardid
             if cardid != None:
                 subprocess.call([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
+                while cardid != None:
+                  print cardid
+                  time.sleep(2)
+                  cardid = reader.reader.checkCard()
+                  cardid = reader.reader.checkCard()
+                  print cardid
+                subprocess.call([dir_path + '/playout_controls.sh -c=playerpause'], shell=True)
         except OSError as e:
             print "Execution failed:" 
