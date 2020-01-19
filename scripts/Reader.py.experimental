@@ -55,6 +55,9 @@ class Mfrc522Reader(object):
     def readCard(self):
         # Scan for cards
         self.device.wait_for_tag()
+        return self.checkCard()
+    def checkCard(self):
+       # checks card ID
         (error, tag_type) = self.device.request()
 
         if not error:
