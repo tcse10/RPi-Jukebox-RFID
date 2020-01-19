@@ -24,13 +24,15 @@ while True:
         try:
             # start the player script and pass on the cardid
             if cardid != None:
-                subprocess.call([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
-                while cardid != None:
-                  print cardid
-                  time.sleep(2)
-                  cardid = reader.reader.checkCard()
-                  cardid = reader.reader.checkCard()
-                  print cardid
-                subprocess.call([dir_path + '/playout_controls.sh -c=playerpause'], shell=True)
+                rc = subprocess.call([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
+                print rc
+                if rc == 0:
+                  while cardid != None:
+#                    print cardid
+                    time.sleep(2)
+                    cardid = reader.reader.checkCard()
+                    cardid = reader.reader.checkCard()
+#                    print cardid
+                  subprocess.call([dir_path + '/playout_controls.sh -c=playerpause'], shell=True)
         except OSError as e:
             print "Execution failed:" 
